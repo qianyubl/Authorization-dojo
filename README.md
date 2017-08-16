@@ -1,11 +1,17 @@
-# MultiThreads-dojo
-Coding dojo on multi-threads.
+Authentication Authorization and Accounting
 
-4 threads A, B, C and D write datas into 4 files fA, fB, fC and fD.
-Thread A only write 'A', thread B only write 'B', thread C only write 'C' and thread D only write 'D'.
-After running the program, the output should be as below:
-fA: ABCDABCD...
-fB: BCDABCDA...
-fC: CDABCDAB...
-fD: DABCDABC...
+Authentication interface has this method
+       login(const string& username, const string& password);
+Accounting interface
+       account(int userId)
+Resource interface:
+       read()
+       write();
+Role
+       AUTHOR
+       READER
+
+Our purpose is to write an Authorization class to grant permission of read/write to users.
+Author role can read/write 
+Reader role only can read but need do account first. 
 
