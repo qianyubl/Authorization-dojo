@@ -37,8 +37,8 @@ enum EUserRole
 
 enum EUserPermission
 {
-    E_READ = 1,
-    E_WRITE = 2
+    E_READONLY,
+    E_WRITE8READ
 };
 
 struct User

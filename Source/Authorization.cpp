@@ -12,20 +12,20 @@ EUserPermission CAuthorizationServer::getPermission(const  std::string name,cons
 
     if (E_READER == user->role)
     {
-        return E_READ;
+        return E_READONLY;
     }
-    return E_WRITE;
+    return E_WRITE8READ;
 }
 
 std::shared_ptr<IResource> CAuthorizationServer::getResource(const std::string name,
                             const std::string passwd)
 {
     EUserPermission l_permission = getPermission(name,passwd);
-    if (E_READ == l_permission)
+    if (E_READONLY == l_permission)
     {
         m_Resource = std::make_shared<ReadOnlyResource>(m_Resource);
     }
-    else if (E_WRITE == l_permission)
+    else if (E_WRITE8READ== l_permission)
     {
         m_Resource = std::make_shared<FullResource>(m_Resource);
     }
