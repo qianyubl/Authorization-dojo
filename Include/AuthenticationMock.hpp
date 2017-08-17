@@ -5,6 +5,6 @@
 class AuthenticationMock: public IAuthentication
 {
 public:
-    MOCK_METHOD2(login, User(const std::string& user, const std::string& name));
+    MOCK_METHOD2(login, std::shared_ptr<User>(const std::string& user, const std::string& name));
 };
 

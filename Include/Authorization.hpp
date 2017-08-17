@@ -42,13 +42,13 @@ class CAuthorizationServer
 {
 public:
     CAuthorizationServer(std::shared_ptr<IAuthentication> p_Authentication)
-        {
+    {
         m_Authentication = p_Authentication;
-        }
+    }
     ~CAuthorizationServer() = default;
 
      Permission getPermission(const std::string name,
-                                  const std::string passwd);
+                                 const std::string passwd);
 
 private:
     std::vector<User> m_userTable;

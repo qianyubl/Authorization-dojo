@@ -2,12 +2,13 @@
 
 #include <string>
 #include "Authorization.hpp"
+#include <memory>
 
 
 
 class IAuthentication
 {
 public:
-    virtual User login(const std::string& user, const std::string& name) = 0;
+    virtual std::shared_ptr<User> login(const std::string& user, const std::string& name) = 0;
 };
 
