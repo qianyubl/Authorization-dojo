@@ -1,5 +1,6 @@
 #include "Authorization.hpp"
 #include "Authentication.hpp"
+#include "ReadOnlyResource.hpp"
 
 EUserPermission CAuthorizationServer::getPermission(const  std::string name,const std :: string passwd)
 {
@@ -11,10 +12,20 @@ EUserPermission CAuthorizationServer::getPermission(const  std::string name,cons
 
     if (E_READER == user->role)
     {
-        m_Resource->read();
         return E_READ;
     }
     return E_WRITE;
+}
+
+std::shared_ptr<IResource> CAuthorizationServer::getResource(const std::string name,
+                            const std::string passwd)
+{
+    EUserPermission l_permission = getPermission(name,passwd);
+    if (E_READ == l_permission)
+    {
+        m_Resource = std::make_shared<ReadOnlyResource>(m_Resource);
+    }
+    return m_Resource;
 }
 
 

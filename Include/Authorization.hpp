@@ -6,6 +6,8 @@
 #include <memory>
 #include "IResource.hpp"
 
+
+
 //#include "Authentication.hpp"
 
 class IAuthentication;
@@ -16,6 +18,15 @@ public:
     InvalidUser() : std::logic_error("InvalidUser")
         {}
 };
+
+class WriteForbidden : std::exception
+{
+public:
+    WriteForbidden() : std::exception()
+        {}
+};
+
+
 
 
 enum EUserRole
@@ -52,9 +63,11 @@ public:
 
      EUserPermission getPermission(const std::string name,
                                  const std::string passwd);
-     void startUserTask(const std::shared_ptr<User> p_User);
+     std::shared_ptr<IResource> getResource(const std::string name,
+                                 const std::string passwd);
 
 private:
+
     std::vector<User> m_userTable;
     std::shared_ptr<IAuthentication> m_Authentication;
     std::shared_ptr<IResource> m_Resource;

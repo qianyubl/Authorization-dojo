@@ -23,8 +23,24 @@ TEST_F(AuthorizationTestSuit, shouldThrowExceptionWhenUserNotExist)
 TEST_F(AuthorizationTestSuit, shouldHaveReadPermissionForAReaderUser)
 {
     EXPECT_CALL(*authMock, login(reader->name,reader->passwd)).WillOnce(Return(reader));
-    EXPECT_CALL(*ResouMock, read());
+//    EXPECT_CALL(*ResouMock, read());
     ASSERT_EQ(E_READ, authorization.getPermission(reader->name,reader->passwd));
 }
+
+TEST_F(AuthorizationTestSuit, shouldAllowReaderUserToRead)
+{
+    EXPECT_CALL(*authMock, login(reader->name,reader->passwd)).WillOnce(Return(reader));
+    EXPECT_CALL(*ResouMock, read());
+    authorization.getResource(reader->name,reader->passwd)->read();
+}
+
+TEST_F(AuthorizationTestSuit, shouldNotAllowReaderUserToWrite)
+{
+    EXPECT_CALL(*authMock, login(reader->name,reader->passwd)).WillOnce(Return(reader));
+    //EXPECT_CALL(*ResouMock, write()).Times(0);
+    ASSERT_THROW(authorization.getResource(reader->name,reader->passwd)->write(), WriteForbidden);
+}
+
+
 
 
