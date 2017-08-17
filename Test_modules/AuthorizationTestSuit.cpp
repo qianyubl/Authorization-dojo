@@ -2,6 +2,6 @@
 #include "gmock/gmock.h"
 
 TEST(AuthorizationTestSuit, test)
-{ 
-	  ASSERT_EQ(1, 1);
+{
+    ASSERT_EQ(1, 1);
 }
