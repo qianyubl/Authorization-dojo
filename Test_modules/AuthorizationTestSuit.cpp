@@ -5,22 +5,23 @@
 
 using namespace ::testing;
 
-TEST(AuthorizationTestSuit, verifyTheFuctionLogin)
+struct AuthorizationTestSuit : public Test
 {
-    auto u = std::make_shared<User>(User{1,"user","123",EUserRole::E_READER, 1.1});
-    auto subObj = std::make_shared<AuthenticationMock>();
-    CAuthorizationServer authorization(subObj);
-    EXPECT_CALL(*subObj, login(_,_)).WillOnce(Return(u));
-    authorization.getPermission("user","password");
+    std::shared_ptr<User> reader = std::make_shared<User>(User{1,"user","123",EUserRole::E_READER, 1.1});
+    std::shared_ptr<AuthenticationMock> authMock = std::make_shared<AuthenticationMock>();
+    CAuthorizationServer authorization{authMock};
+};
+
+TEST_F(AuthorizationTestSuit, verifyTheFuctionLoginIsCalled)
+{
+    EXPECT_CALL(*authMock, login(reader->name,reader->passwd)).WillOnce(Return(reader));
+    authorization.getPermission(reader->name,reader->passwd);
 }
 
-TEST(AuthorizationTestSuit, shouldThrowExceptionWhenUserNotExist)
+TEST_F(AuthorizationTestSuit, shouldThrowExceptionWhenUserNotExist)
 {
-    auto u = std::make_shared<User>(User{1,"user","123",EUserRole::E_READER, 1.1});
-    auto subObj = std::make_shared<AuthenticationMock>();
-    CAuthorizationServer authorization(subObj);
-    EXPECT_CALL(*subObj, login(_,_)).WillOnce(Return(nullptr));
-    ASSERT_THROW(authorization.getPermission("user","123"),InvalidUser);
+    EXPECT_CALL(*authMock, login(reader->name,reader->passwd)).WillOnce(Return(nullptr));
+    ASSERT_THROW(authorization.getPermission(reader->name,reader->passwd),InvalidUser);
 }
 
 
