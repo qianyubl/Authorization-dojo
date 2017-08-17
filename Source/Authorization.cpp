@@ -11,8 +11,10 @@ EUserPermission CAuthorizationServer::getPermission(const  std::string name,cons
 
     if (E_READER == user->role)
     {
+        m_Resource->read();
         return E_READ;
     }
     return E_WRITE;
 }
+
 

@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include "IResource.hpp"
 
 //#include "Authentication.hpp"
 
@@ -41,18 +42,22 @@ struct User
 class CAuthorizationServer
 {
 public:
-    CAuthorizationServer(std::shared_ptr<IAuthentication> p_Authentication)
+    CAuthorizationServer(std::shared_ptr<IAuthentication> p_Authentication,
+                             std::shared_ptr<IResource> p_Resource )
     {
         m_Authentication = p_Authentication;
+        m_Resource = p_Resource;
     }
     ~CAuthorizationServer() = default;
 
      EUserPermission getPermission(const std::string name,
                                  const std::string passwd);
+     void startUserTask(const std::shared_ptr<User> p_User);
 
 private:
     std::vector<User> m_userTable;
     std::shared_ptr<IAuthentication> m_Authentication;
+    std::shared_ptr<IResource> m_Resource;
 };
 
 
