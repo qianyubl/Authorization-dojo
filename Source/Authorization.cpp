@@ -25,6 +25,10 @@ std::shared_ptr<IResource> CAuthorizationServer::getResource(const std::string n
     {
         m_Resource = std::make_shared<ReadOnlyResource>(m_Resource);
     }
+    else if (E_WRITE == l_permission)
+    {
+        m_Resource = std::make_shared<FullResource>(m_Resource);
+    }
     return m_Resource;
 }
 
