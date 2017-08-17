@@ -24,5 +24,10 @@ TEST_F(AuthorizationTestSuit, shouldThrowExceptionWhenUserNotExist)
     ASSERT_THROW(authorization.getPermission(reader->name,reader->passwd),InvalidUser);
 }
 
+TEST_F(AuthorizationTestSuit, shouldReturnReadPermissionForReader)
+{
+    EXPECT_CALL(*authMock, login(reader->name,reader->passwd)).WillOnce(Return(reader));
+    ASSERT_EQ(E_READ, authorization.getPermission(reader->name,reader->passwd));
+}
 
 

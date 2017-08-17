@@ -1,7 +1,7 @@
 #include "Authorization.hpp"
 #include "Authentication.hpp"
 
-Permission CAuthorizationServer::getPermission(const  std::string name,const std :: string passwd)
+EUserPermission CAuthorizationServer::getPermission(const  std::string name,const std :: string passwd)
 {
     auto user = m_Authentication->login(name,passwd);
     if(nullptr == user)
@@ -9,6 +9,10 @@ Permission CAuthorizationServer::getPermission(const  std::string name,const std
         throw InvalidUser();
     }
 
-    return Permission();
+    if (E_READER == user->role)
+    {
+        return E_READ;
+    }
+    return E_WRITE;
 }
 

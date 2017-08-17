@@ -19,8 +19,14 @@ public:
 
 enum EUserRole
 {
-   E_READER,
-   E_AUTHOR
+    E_READER,
+    E_AUTHOR
+};
+
+enum EUserPermission
+{
+    E_READ = 1,
+    E_WRITE = 2
 };
 
 struct User
@@ -32,12 +38,6 @@ struct User
    double account;
 };
 
-struct Permission
-{
-    bool canWrite;
-    bool canRead;
-};
-
 class CAuthorizationServer
 {
 public:
@@ -47,7 +47,7 @@ public:
     }
     ~CAuthorizationServer() = default;
 
-     Permission getPermission(const std::string name,
+     EUserPermission getPermission(const std::string name,
                                  const std::string passwd);
 
 private:
